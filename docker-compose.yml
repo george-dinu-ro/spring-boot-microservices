@@ -1,3 +1,4 @@
+
 version: '4.1'
 
 services:
@@ -14,5 +15,18 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: order-service
+    volumes:
+      - mysql-data:/var/lib/mysql
+
 volumes:
-  mongo-data:	  
+  mongo-data:
+  mysql-data:
