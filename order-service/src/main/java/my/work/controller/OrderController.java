@@ -1,6 +1,9 @@
 package my.work.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +26,11 @@ public class OrderController {
 	String createOrder(@RequestBody OrderDto orderDto) {
 		orderService.createOrder(orderDto);
 		return "Order created";
+	}
+
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
+	List<OrderDto> getAllOrders() {
+		return orderService.getAllOrders();
 	}
 }

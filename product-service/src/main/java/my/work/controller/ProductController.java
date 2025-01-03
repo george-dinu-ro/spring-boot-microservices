@@ -23,13 +23,13 @@ public class ProductController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ProductDto createProduct(@RequestBody ProductDto productDto) {
+	ProductDto createProduct(@RequestBody ProductDto productDto) {
 		return productService.createProduct(productDto);
 	}
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<ProductDto> getAllProducts() {
+	List<ProductDto> getAllProducts() {
 		return productService.getAllProducts();
 	}
 }

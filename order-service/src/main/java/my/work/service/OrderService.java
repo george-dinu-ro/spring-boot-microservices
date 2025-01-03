@@ -1,5 +1,7 @@
 package my.work.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -20,5 +22,12 @@ public class OrderService {
 
 		orderRepository.save(order);
 		log.info("Order created: {}", order);
+	}
+
+	public List<OrderDto> getAllOrders() {
+		var orders = OrderDtoMapper.toDtos(orderRepository.findAll());
+		log.info("Orders found: {}", orders.size());
+
+		return orders;
 	}
 }
