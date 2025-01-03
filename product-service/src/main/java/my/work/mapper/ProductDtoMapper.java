@@ -15,7 +15,12 @@ public class ProductDtoMapper {
 	}
 
 	public static ProductDto toDto(Product product) {
-		return new ProductDto(product.getId(), product.getName(), product.getDescription(), product.getPrice());
+		return ProductDto.builder()
+				.id(product.getId())
+				.name(product.getName())
+				.description(product.getDescription())
+				.price(product.getPrice())
+				.build();
 	}
 
 	public static List<Product> toEntities(List<ProductDto> productDtos) {
@@ -23,6 +28,11 @@ public class ProductDtoMapper {
 	}
 
 	public static Product toEntity(ProductDto productDto) {
-		return new Product(productDto.id(), productDto.name(), productDto.description(), productDto.price());
+		return Product.builder()
+				.id(productDto.id())
+				.name(productDto.name())
+				.description(productDto.description())
+				.price(productDto.price())
+				.build();
 	}
 }
