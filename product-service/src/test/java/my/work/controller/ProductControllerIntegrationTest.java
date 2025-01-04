@@ -1,4 +1,4 @@
-package my.work;
+package my.work.controller;
 
 import java.math.BigDecimal;
 
@@ -18,7 +18,7 @@ import my.work.dto.ProductDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ProductServiceApplicationTests {
+class ProductControllerIntegrationTest {
 
 	@ServiceConnection
 	static MongoDBContainer mongoDBContainer;
@@ -46,12 +46,12 @@ class ProductServiceApplicationTests {
 				.description("Description 1")
 				.price(BigDecimal.valueOf(10.0))
 				.build();
-		
+
 		RestAssured
 			.given()
 				.contentType("application/json")
 				.body(product)
-			.when()	
+			.when()
 				.post("/api/v1/products")
 			.then()
 				.statusCode(201)
@@ -61,7 +61,7 @@ class ProductServiceApplicationTests {
 				.body("description", Matchers.equalTo("Description 1"))
 				.body("price", Matchers.equalTo(10.0F));
 	}
-	
+
 	@Test
 	@Order(2)
 	void shouldGetAllProducts() {
@@ -72,5 +72,5 @@ class ProductServiceApplicationTests {
 				.statusCode(200)
 				.body("size()", Matchers.equalTo(1));
 	}
-	
+
 }
