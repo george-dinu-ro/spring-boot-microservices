@@ -1,6 +1,7 @@
 package my.work.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class OrderService {
 
 	public void createOrder(OrderDto orderDto) {
 		var order = OrderDtoMapper.toEntity(orderDto);
+		order.setNumber(UUID.randomUUID().toString());
 
 		orderRepository.save(order);
 		log.info("Order created: {}", order);
@@ -30,4 +32,5 @@ public class OrderService {
 
 		return orders;
 	}
+	
 }

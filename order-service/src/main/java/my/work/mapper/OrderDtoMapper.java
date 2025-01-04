@@ -15,7 +15,11 @@ public class OrderDtoMapper {
 	}
 
 	public static OrderDto toDto(Order order) {
-		return new OrderDto(order.getId(), order.getNumber(), order.getCode(), order.getPrice(), order.getQuantity());
+		return OrderDto.builder()
+				.number(order.getNumber())
+				.code(order.getCode())
+				.quantity(order.getQuantity())
+				.build();
 	}
 
 	public static List<Order> toEntities(List<OrderDto> orderDtos) {
@@ -23,6 +27,11 @@ public class OrderDtoMapper {
 	}
 
 	public static Order toEntity(OrderDto orderDto) {
-		return new Order(orderDto.id(), orderDto.number(), orderDto.code(), orderDto.price(), orderDto.quantity());
+		return Order.builder()
+				.number(orderDto.number())
+				.code(orderDto.code())
+				.quantity(orderDto.quantity())
+				.build();
 	}
+	
 }

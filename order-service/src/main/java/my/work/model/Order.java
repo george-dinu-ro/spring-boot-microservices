@@ -1,7 +1,5 @@
 package my.work.model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,7 +28,6 @@ public class Order {
 
 	private String code;
 
-	private BigDecimal price;
-
 	private Integer quantity;
+
 }

@@ -1,8 +1,6 @@
-package my.work;
+package my.work.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +18,7 @@ import my.work.dto.OrderDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class OrderServiceApplicationTest {
+class OrderControllerIntegrationTest {
 
 	@ServiceConnection
 	static MySQLContainer<?> mySQLContainer;
@@ -43,27 +41,24 @@ class OrderServiceApplicationTest {
 	@Order(1)
 	void shouldCreateOrder() {
 		var order = OrderDto.builder()
-                .number("Order 1")
-                .code("Code 1")
-                .price(BigDecimal.valueOf(10.0))
-                .quantity(1)
+				.code("Code 1")
+				.quantity(1)
 				.build();
-		
+
 		var response = RestAssured
-			.given()
-				.contentType("application/json")
-				.body(order)
-			.when()	
-				.post("/api/v1/orders")
-			.then()
-				.statusCode(201)
-				.extract()
-				.body().asString();
-		
-        assertThat(response)
-        .isEqualTo("Order created");
+				.given()
+					.contentType("application/json")
+					.body(order)
+				.when()
+					.post("/api/v1/orders")
+				.then()
+					.statusCode(201)
+					.extract()
+					.body().asString();
+
+		assertThat(response).isEqualTo("Order created");
 	}
-	
+
 	@Test
 	@Order(2)
 	void shouldGetAllOrders() {
@@ -74,4 +69,5 @@ class OrderServiceApplicationTest {
 				.statusCode(200)
 				.body("size()", Matchers.equalTo(1));
 	}
+
 }

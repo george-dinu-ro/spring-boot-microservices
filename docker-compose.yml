@@ -21,7 +21,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: mysql
-      MYSQL_DATABASE: order-service
+      MYSQL_DATABASE: order-db
     volumes:
       - mysql-order-data:/var/lib/mysql
 
