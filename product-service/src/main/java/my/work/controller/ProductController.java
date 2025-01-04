@@ -32,4 +32,5 @@ public class ProductController {
 	List<ProductDto> getAllProducts() {
 		return productService.getAllProducts();
 	}
+	
 }

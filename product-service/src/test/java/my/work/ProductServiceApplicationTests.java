@@ -42,6 +42,7 @@ class ProductServiceApplicationTests {
 	void shouldCreateProduct() {
 		var product = ProductDto.builder()
 				.name("Product 1")
+				.code(10)
 				.description("Description 1")
 				.price(BigDecimal.valueOf(10.0))
 				.build();
@@ -55,6 +56,7 @@ class ProductServiceApplicationTests {
 			.then()
 				.statusCode(201)
 				.body("id", Matchers.notNullValue())
+				.body("code", Matchers.equalTo(10))
 				.body("name", Matchers.equalTo("Product 1"))
 				.body("description", Matchers.equalTo("Description 1"))
 				.body("price", Matchers.equalTo(10.0F));
@@ -70,4 +72,5 @@ class ProductServiceApplicationTests {
 				.statusCode(200)
 				.body("size()", Matchers.equalTo(1));
 	}
+	
 }

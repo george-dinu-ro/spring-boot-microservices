@@ -17,6 +17,7 @@ public class ProductDtoMapper {
 	public static ProductDto toDto(Product product) {
 		return ProductDto.builder()
 				.id(product.getId())
+				.code(product.getCode())
 				.name(product.getName())
 				.description(product.getDescription())
 				.price(product.getPrice())
@@ -30,9 +31,11 @@ public class ProductDtoMapper {
 	public static Product toEntity(ProductDto productDto) {
 		return Product.builder()
 				.id(productDto.id())
+				.code(productDto.code())
 				.name(productDto.name())
 				.description(productDto.description())
 				.price(productDto.price())
 				.build();
 	}
+	
 }

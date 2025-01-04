@@ -24,9 +24,12 @@ public class Product {
 	@Id
 	private String id;
 
+	private int code;
+	
 	private String name;
 
 	private String description;
 
 	private BigDecimal price;
+	
 }
