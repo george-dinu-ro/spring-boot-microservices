@@ -1,20 +1,21 @@
 services:
-  mongodb:
+  mongodb-product-service:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongodb-product-service
     restart: always
     ports:
       - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mongo
-      MONGO_INITDB_DATABASE: product-service
+      MONGO_INITDB_DATABASE: product-db
     volumes:
-      - mongo-data:/data/db
+      - ./docker/mongodb-product-service-init.js:/docker-entrypoint-initdb.d/init.js:ro
+      - mongo-product-data:/data/db
 
-  mysql:
+  mysql-order-service:
     image: mysql:latest
-    container_name: mysql
+    container_name: mysql-order-service
     restart: always
     ports:
       - "3306:3306"
@@ -22,8 +23,8 @@ services:
       MYSQL_ROOT_PASSWORD: mysql
       MYSQL_DATABASE: order-service
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-order-data:/var/lib/mysql
 
 volumes:
-  mongo-data:
-  mysql-data:
+  mongo-product-data:
+  mysql-order-data:
