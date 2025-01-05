@@ -7,6 +7,7 @@ spring:
       username: root
       password: mongo
       authentication-database: admin
+      auto-index-creation: true
 
 server:
   port: 8080
