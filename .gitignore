@@ -1,1 +1,29 @@
-/.project
+# Eclipse project files
+**/.log
+**/.bak
+**/.swp
+**/~.nib
+**/.metadata/
+**/bin/
+**/.tmp
+**/.class
+
+# Eclipse specific files
+**/.settings/
+**/.project
+**/.classpath
+**/.factorypath
+
+# Maven specific files
+**/target/
+
+# IntelliJ IDEA specific files (optional, remove if not using IntelliJ)
+**/.idea/
+
+# Operating System files
+**/.DS_Store
+**/Thumbs.db
+
+# Eclipse-specific temporary folders
+**/tmp/
+**/.log
