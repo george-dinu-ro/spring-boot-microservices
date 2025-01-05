@@ -2,6 +2,7 @@ package my.work.controller;
 
 import java.math.BigDecimal;
 
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -41,10 +42,10 @@ class ProductControllerIntegrationTest {
 	@Order(1)
 	void shouldCreateProduct() {
 		var product = ProductDto.builder()
-				.name("Product 1")
+				.name("Nokia")
 				.code(10)
-				.description("Description 1")
-				.price(BigDecimal.valueOf(10.0))
+				.description("Mobile phone")
+				.price(BigDecimal.valueOf(500))
 				.build();
 
 		RestAssured
@@ -57,9 +58,9 @@ class ProductControllerIntegrationTest {
 				.statusCode(201)
 				.body("id", Matchers.notNullValue())
 				.body("code", Matchers.equalTo(10))
-				.body("name", Matchers.equalTo("Product 1"))
-				.body("description", Matchers.equalTo("Description 1"))
-				.body("price", Matchers.equalTo(10.0F));
+				.body("name", Matchers.equalTo("Nokia"))
+				.body("description", Matchers.equalTo("Mobile phone"))
+				.body("price", Matchers.equalTo(500));
 	}
 
 	@Test
@@ -73,4 +74,34 @@ class ProductControllerIntegrationTest {
 				.body("size()", Matchers.equalTo(1));
 	}
 
+	@Test
+	@Order(3)
+	void givenNotExistingCode_whenCallFindByCode_shouldReturnStatus404AndEmptyBody() {
+		RestAssured
+			.given()
+				.param("code", 100)
+			.when()
+				.get("/api/v1/products/filter")
+			.then()
+				.statusCode(404)
+				.body(CoreMatchers.equalTo(""));
+	}
+	
+	@Test
+	@Order(4)
+	void givenExistingCode_whenCallFindByCode_shouldReturnStatus200AndProductInBody() {
+		RestAssured
+			.given()
+				.param("code", 10)
+			.when()
+				.get("/api/v1/products/filter")
+			.then()
+				.statusCode(200)
+				.body("id", Matchers.notNullValue())
+				.body("code", Matchers.equalTo(10))
+				.body("name", Matchers.equalTo("Nokia"))
+				.body("description", Matchers.equalTo("Mobile phone"))
+				.body("price", Matchers.equalTo(500));
+	}
+	
 }
