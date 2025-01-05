@@ -23,13 +23,13 @@ class OrderControllerIntegrationTest {
 	@ServiceConnection
 	static MySQLContainer<?> mySQLContainer;
 
-	static {
-		mySQLContainer = new MySQLContainer("mysql:latest");
-		mySQLContainer.start();
-	}
-
 	@LocalServerPort
 	private int port;
+	
+	static {
+		mySQLContainer = new MySQLContainer<>("mysql:latest");
+		mySQLContainer.start();
+	}
 
 	@BeforeEach
 	void setup() {
@@ -41,7 +41,7 @@ class OrderControllerIntegrationTest {
 	@Order(1)
 	void shouldCreateOrder() {
 		var order = OrderDto.builder()
-				.code("Code 1")
+				.code(10)
 				.quantity(1)
 				.build();
 

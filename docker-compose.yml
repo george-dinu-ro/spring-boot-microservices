@@ -10,7 +10,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: mongo
       MONGO_INITDB_DATABASE: product-db
     volumes:
-      - ./docker/mongodb-product-service-init.js:/docker-entrypoint-initdb.d/init.js:ro
+      - ./docker/mongo-product-service-init.js:/docker-entrypoint-initdb.d/init.js:ro
       - mongo-product-data:/data/db
 
   mysql-order-service:
@@ -25,6 +25,20 @@ services:
     volumes:
       - mysql-order-data:/var/lib/mysql
 
+  mysql-inventory-service:
+    image: mysql:latest
+    container_name: mysql-inventory-service
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: inventory-db
+    volumes:
+      - ./docker/mysql-inventory-service-init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - mysql-inventory-data:/var/lib/mysql
+
 volumes:
   mongo-product-data:
   mysql-order-data:
+  mysql-inventory-data:

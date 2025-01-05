@@ -23,13 +23,13 @@ class ProductControllerIntegrationTest {
 	@ServiceConnection
 	static MongoDBContainer mongoDBContainer;
 
+	@LocalServerPort
+	private int port;
+	
 	static {
 		mongoDBContainer = new MongoDBContainer("mongo:latest");
 		mongoDBContainer.start();
 	}
-
-	@LocalServerPort
-	private int port;
 
 	@BeforeEach
 	void setup() {
