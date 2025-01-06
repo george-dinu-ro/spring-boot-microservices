@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import my.work.dto.StatusDto;
 import my.work.service.InventoryService;
 
 @RequestMapping("/api/v1/inventories")
@@ -17,9 +18,9 @@ public class InventoryController {
 
 	private final InventoryService inventoryService;
 
-	@GetMapping("/inStock")
-	@ResponseStatus(code = HttpStatus.OK)
-	boolean isInStock(@RequestParam Integer code, @RequestParam Integer quantity) {
+	@GetMapping("/status")
+	@ResponseStatus(HttpStatus.OK)
+	StatusDto getCommand(@RequestParam int code, @RequestParam int quantity) {
 		return inventoryService.isInStock(code, quantity);
 	}
 

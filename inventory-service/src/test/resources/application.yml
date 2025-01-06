@@ -1,0 +1,2 @@
+productservice:
+  url: http://localhost:${wiremock.server.port}

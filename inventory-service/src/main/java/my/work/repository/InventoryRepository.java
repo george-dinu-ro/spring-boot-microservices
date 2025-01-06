@@ -8,6 +8,6 @@ import my.work.model.Inventory;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
 
-	boolean existsByCodeAndQuantityIsGreaterThanEqual(Integer code, Integer quantity);
+	boolean existsByCodeAndQuantityIsGreaterThanEqual(int code, int quantity);
 
 }
