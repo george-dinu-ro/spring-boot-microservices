@@ -16,9 +16,11 @@ public class OrderDtoMapper {
 
 	public static OrderDto toDto(Order order) {
 		return OrderDto.builder()
+				.id(order.getId())
 				.number(order.getNumber())
 				.code(order.getCode())
 				.quantity(order.getQuantity())
+				.totalPrice(order.getTotalPrice())
 				.build();
 	}
 
@@ -28,9 +30,11 @@ public class OrderDtoMapper {
 
 	public static Order toEntity(OrderDto orderDto) {
 		return Order.builder()
+				.id(orderDto.id())
 				.number(orderDto.number())
 				.code(orderDto.code())
 				.quantity(orderDto.quantity())
+				.totalPrice(orderDto.totalPrice())
 				.build();
 	}
 	

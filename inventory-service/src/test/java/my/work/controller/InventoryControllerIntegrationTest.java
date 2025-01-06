@@ -108,8 +108,8 @@ class InventoryControllerIntegrationTest {
 	}
 	
 	@Test
-	void givenExistingCode_whenVerifyStockWithProductWithoutPrice_thenReturnEmptyBody() throws IOException {
-		productClientStub.stubUnSuccessfullyFindByCodeCall(10);
+	void givenExistingCode_whenVerifyStockWithProductWithoutPrice_thenReturnEmptyBody() {
+		productClientStub.stubUnsuccessfullyFindByCodeCall(10);
 				
 		RestAssured
 			.given()

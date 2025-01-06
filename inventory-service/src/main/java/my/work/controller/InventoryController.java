@@ -20,8 +20,8 @@ public class InventoryController {
 
 	@GetMapping("/status")
 	@ResponseStatus(HttpStatus.OK)
-	StatusDto getCommand(@RequestParam int code, @RequestParam int quantity) {
-		return inventoryService.isInStock(code, quantity);
+	StatusDto getStatus(@RequestParam int code, @RequestParam int quantity) {
+		return inventoryService.getStatus(code, quantity);
 	}
 
 }

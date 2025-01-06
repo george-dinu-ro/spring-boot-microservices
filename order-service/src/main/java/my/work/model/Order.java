@@ -1,5 +1,7 @@
 package my.work.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "order_tab")
@@ -18,6 +21,7 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
+@ToString
 public class Order {
 
 	@Id
@@ -26,8 +30,10 @@ public class Order {
 
 	private String number;
 
-	private Integer code;
+	private int code;
 
-	private Integer quantity;
+	private int quantity;
 
+	private BigDecimal totalPrice;
+	
 }

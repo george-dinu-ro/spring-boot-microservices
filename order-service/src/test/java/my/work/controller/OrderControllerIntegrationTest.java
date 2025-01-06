@@ -1,22 +1,27 @@
 package my.work.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.io.IOException;
 
+import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.testcontainers.containers.MySQLContainer;
 
 import io.restassured.RestAssured;
 import my.work.dto.OrderDto;
+import my.work.stub.InventoryClientStub;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWireMock(port = 0)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class OrderControllerIntegrationTest {
 
@@ -25,6 +30,9 @@ class OrderControllerIntegrationTest {
 
 	@LocalServerPort
 	private int port;
+
+	@Autowired
+	private InventoryClientStub inventoryClientStub;
 	
 	static {
 		mySQLContainer = new MySQLContainer<>("mysql:latest");
@@ -39,28 +47,51 @@ class OrderControllerIntegrationTest {
 
 	@Test
 	@Order(1)
-	void shouldCreateOrder() {
+	void givenExistingStock_shouldCreateOrder() throws IOException {
 		var order = OrderDto.builder()
 				.code(10)
 				.quantity(1)
 				.build();
 
-		var response = RestAssured
-				.given()
-					.contentType("application/json")
-					.body(order)
-				.when()
-					.post("/api/v1/orders")
-				.then()
-					.statusCode(201)
-					.extract()
-					.body().asString();
-
-		assertThat(response).isEqualTo("Order created");
+		inventoryClientStub.stubSuccessfullyGetStatusCall(10, 1);
+		
+		RestAssured
+			.given()
+				.contentType("application/json")
+				.body(order)
+			.when()
+				.post("/api/v1/orders")
+			.then()
+				.statusCode(201)
+				.body("number", Matchers.notNullValue(null))
+				.body("code", Matchers.equalTo(10))
+				.body("quantity", Matchers.equalTo(1))
+				.body("totalPrice", Matchers.equalTo(2000));
 	}
 
 	@Test
 	@Order(2)
+	void givenNotExistingStock_shouldNotCreateOrder() {
+		var order = OrderDto.builder()
+				.code(10)
+				.quantity(1)
+				.build();
+
+		inventoryClientStub.stubUnsuccessfullyGetStatusCall(10, 1);
+		
+		RestAssured
+			.given()
+				.contentType("application/json")
+				.body(order)
+			.when()
+				.post("/api/v1/orders")
+			.then()
+				.statusCode(201)
+				.body(CoreMatchers.equalTo(""));
+	}
+	
+	@Test
+	@Order(3)
 	void shouldGetAllOrders() {
 		RestAssured
 			.when()

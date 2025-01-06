@@ -13,38 +13,39 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import my.work.dto.ProductDto;
+import my.work.dto.StatusDto;
 
 @Component
 @RequiredArgsConstructor
-public class ProductClientStub {
+public class InventoryClientStub {
 
 	private final ObjectMapper objectMapper;
 	
-	public void stubSuccessfullyFindByCodeCall(int code) throws IOException {
-		var productDto = ProductDto.builder()
-				.id("a1")
+	public void stubSuccessfullyGetStatusCall(int code, int quantity) throws IOException {
+		var statusDto = StatusDto.builder()
 				.code(code)
 				.name("Asus")
 				.description("Gaming laptop")
-				.price(BigDecimal.valueOf(2000))
+				.quantity(quantity)
+				.totalPrice(BigDecimal.valueOf(2000))
 				.build();
 		
-		stubFor(get(urlEqualTo("/api/v1/products/filter?code=" + code))
+		stubFor(get(urlEqualTo("/api/v1/inventories/status?code=" + code + "&quantity=" + quantity))
 				.willReturn(aResponse()
 						.withStatus(200)
 						.withHeader("Content-Type", "application/json")
-						.withBody(getJson(productDto))));
+						.withBody(getJson(statusDto))));
 	}
-
-	public void stubUnsuccessfullyFindByCodeCall(int code) {
-		stubFor(get(urlEqualTo("/api/v1/products/filter?code=" + code))
+	
+	public void stubUnsuccessfullyGetStatusCall(int code, int quantity) {		
+		stubFor(get(urlEqualTo("/api/v1/inventories/status?code=" + code + "&quantity=" + quantity))
 				.willReturn(aResponse()
 						.withStatus(200)
 						.withHeader("Content-Type", "application/json")));
 	}
 	
-	private String getJson(ProductDto productDto) throws IOException {
-		return objectMapper.writeValueAsString(productDto);
+	private String getJson(StatusDto statusDto) throws IOException {
+		return objectMapper.writeValueAsString(statusDto);
 	}
+	
 }

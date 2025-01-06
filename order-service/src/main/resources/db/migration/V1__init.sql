@@ -3,5 +3,6 @@ CREATE TABLE `order_tab` (
 `number` varchar(255) DEFAULT NULL,
 `code` int(11),
 `quantity` int(11),
+`total_price` decimal(10,2),
 PRIMARY KEY(`id`)
 )

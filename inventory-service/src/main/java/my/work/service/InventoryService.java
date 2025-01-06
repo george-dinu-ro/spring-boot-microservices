@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import my.work.client.ProductFeignClient;
-import my.work.dto.StatusDto;
 import my.work.dto.ProductDto;
+import my.work.dto.StatusDto;
 import my.work.repository.InventoryRepository;
 
 @Service
@@ -21,7 +21,7 @@ public class InventoryService {
 
 	private final ProductFeignClient productFeignClient;
 
-	public StatusDto isInStock(int code, int quantity) {
+	public StatusDto getStatus(int code, int quantity) {
 		var isInStock = inventoryRepository.existsByCodeAndQuantityIsGreaterThanEqual(code, quantity);
 		log.info("Product with code {} is in stock: {}", code, isInStock);
 
@@ -35,7 +35,7 @@ public class InventoryService {
 
 	private ProductDto getProduct(int code) {
 		var product = productFeignClient.findByCode(code);
-		log.info("Product with code {} returned from product service", code, product);
+		log.info("Product with code {} returned from product service: {}", code, product);
 
 		return product;
 	}
