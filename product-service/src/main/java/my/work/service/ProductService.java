@@ -1,7 +1,7 @@
 package my.work.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -34,11 +34,12 @@ public class ProductService {
 		return products;
 	}
 
-	public Optional<ProductDto> findByCode(Integer code) {
+	public ProductDto findByCode(int code) {
 		var product = productRepository.findByCode(code);
-		log.info("Product found by code {} : {}", code, product.isPresent());
+		var productDto = product.isPresent() ? ProductDtoMapper.toDto(product.get()) : null;
+		log.info("Product searched by code {} exists: {}", code, !Objects.isNull(productDto));
 
-		return Optional.ofNullable(product.isPresent() ? ProductDtoMapper.toDto(product.get()) : null);
+		return productDto;
 	}
 
 }

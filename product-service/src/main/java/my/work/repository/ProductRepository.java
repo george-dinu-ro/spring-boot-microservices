@@ -10,6 +10,6 @@ import my.work.model.Product;
 @Repository
 public interface ProductRepository extends MongoRepository<Product, String> {
 
-	Optional<Product> findByCode(Integer code);
+	Optional<Product> findByCode(int code);
 
 }

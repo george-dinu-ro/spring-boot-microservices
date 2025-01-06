@@ -76,20 +76,20 @@ class ProductControllerIntegrationTest {
 
 	@Test
 	@Order(3)
-	void givenNotExistingCode_whenCallFindByCode_shouldReturnStatus404AndEmptyBody() {
+	void givenNotExistingCode_whenCallFindByCode_shouldReturnEmptyBody() {
 		RestAssured
 			.given()
 				.param("code", 100)
 			.when()
 				.get("/api/v1/products/filter")
 			.then()
-				.statusCode(404)
+				.statusCode(200)
 				.body(CoreMatchers.equalTo(""));
 	}
 	
 	@Test
 	@Order(4)
-	void givenExistingCode_whenCallFindByCode_shouldReturnStatus200AndProductInBody() {
+	void givenExistingCode_whenCallFindByCode_shouldReturnStatusProductInbody() {
 		RestAssured
 			.given()
 				.param("code", 10)
