@@ -9,5 +9,11 @@ spring:
       authentication-database: admin
       auto-index-creation: true
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
+
 server:
   port: 8080
